@@ -1,78 +1,75 @@
-import { Product } from '../data/products';
+import { Star, TrendingDown, Store, Shield } from 'lucide-react';
+import { Product } from '../types';
+import { formatPrice } from '../data/store';
 
 interface ProductCardProps {
   product: Product;
-  onSelect: (product: Product) => void;
+  onClick: (product: Product) => void;
 }
 
-function formatPrice(price: number): string {
-  return new Intl.NumberFormat('fa-IR').format(price);
-}
-
-export default function ProductCard({ product, onSelect }: ProductCardProps) {
-  const discount = product.offers.find(o => o.originalPrice);
-  const discountPercent = discount?.originalPrice
-    ? Math.round(((discount.originalPrice - discount.price) / discount.originalPrice) * 100)
-    : 0;
+export default function ProductCard({ product, onClick }: ProductCardProps) {
+  const discount = Math.round(((product.maxPrice - product.minPrice) / product.maxPrice) * 100);
 
   return (
     <div
-      onClick={() => onSelect(product)}
-      className="bg-white rounded-2xl border border-gray-100 hover:border-pink-200 hover:shadow-xl transition-all duration-300 cursor-pointer group overflow-hidden animate-fade-in"
+      onClick={() => onClick(product)}
+      className="bg-white rounded-2xl border border-border-light overflow-hidden card-hover cursor-pointer group"
     >
-      {/* Image Section */}
-      <div className="relative p-6 pb-2">
-        {discountPercent > 0 && (
-          <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-lg">
-            {discountPercent}% تخفیف
+      {/* Image */}
+      <div className="relative aspect-square bg-surface-secondary overflow-hidden">
+        <img
+          src={product.image}
+          alt={product.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        {discount > 5 && (
+          <div className="absolute top-3 left-3 flex items-center gap-1 px-2 py-1 bg-danger/90 text-white text-xs font-medium rounded-lg backdrop-blur-sm">
+            <TrendingDown className="w-3 h-3" />
+            {discount}%
           </div>
         )}
-        {product.tags.includes('پرفروش') && (
-          <div className="absolute top-3 right-3 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-lg">
-            🔥 پرفروش
-          </div>
-        )}
-        <div className="text-6xl text-center py-4 group-hover:scale-110 transition-transform duration-300">
-          {product.image}
+        <div className="absolute bottom-3 right-3 flex items-center gap-1 px-2 py-1 bg-white/90 backdrop-blur-sm rounded-lg text-xs font-medium text-text-secondary">
+          <Store className="w-3 h-3" />
+          {product.sellers.length} فروشنده
         </div>
       </div>
 
-      {/* Info Section */}
-      <div className="px-4 pb-4">
-        <h3 className="text-sm font-semibold text-gray-800 line-clamp-2 mb-2 group-hover:text-pink-600 transition-colors duration-200 leading-6">
+      {/* Content */}
+      <div className="p-4">
+        <div className="flex items-center gap-1.5 mb-2">
+          <span className="text-[11px] text-text-muted font-medium">{product.brand}</span>
+          <span className="text-text-muted">·</span>
+          <span className="text-[11px] text-text-muted">{product.subcategory}</span>
+        </div>
+        
+        <h3 className="text-sm font-semibold text-text-primary leading-relaxed line-clamp-2 mb-3 group-hover:text-primary-600 transition-colors">
           {product.title}
         </h3>
 
         {/* Rating */}
-        <div className="flex items-center gap-1 mb-3">
+        <div className="flex items-center gap-1.5 mb-3">
           <div className="flex items-center gap-0.5">
-            {[...Array(5)].map((_, i) => (
-              <i
-                key={i}
-                className={`fas fa-star text-xs ${
-                  i < Math.floor(product.rating) ? 'text-amber-400' : 'text-gray-200'
-                }`}
-              ></i>
-            ))}
+            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+            <span className="text-xs font-medium text-text-primary">{product.rating}</span>
           </div>
-          <span className="text-xs text-gray-400">({formatPrice(product.reviewCount)})</span>
+          <span className="text-[11px] text-text-muted">({product.reviewCount} نظر)</span>
         </div>
 
-        {/* Price Section */}
-        <div className="border-t border-gray-100 pt-3">
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-xs text-gray-400 mb-1">از</p>
-              <p className="text-lg font-extrabold text-pink-600">
-                {formatPrice(product.minPrice)}
-              </p>
-              <p className="text-xs text-gray-400">تومان</p>
-            </div>
-            <div className="flex items-center gap-1 bg-blue-50 text-blue-600 px-2 py-1 rounded-lg">
-              <i className="fas fa-store text-xs"></i>
-              <span className="text-xs font-medium">{product.offersCount} فروشگاه</span>
-            </div>
+        {/* Price */}
+        <div className="flex items-end justify-between pt-3 border-t border-border-light">
+          <div>
+            <p className="text-[11px] text-text-muted mb-0.5">از</p>
+            <p className="text-base font-bold text-primary-600">{formatPrice(product.minPrice)}</p>
           </div>
+          {product.maxPrice !== product.minPrice && (
+            <p className="text-xs text-text-muted line-through">{formatPrice(product.maxPrice)}</p>
+          )}
+        </div>
+
+        {/* Warranty badge */}
+        <div className="flex items-center gap-1 mt-3">
+          <Shield className="w-3 h-3 text-success" />
+          <span className="text-[11px] text-success font-medium">گارانتی اصالت کالا</span>
         </div>
       </div>
     </div>
