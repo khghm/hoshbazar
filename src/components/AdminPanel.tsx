@@ -1172,6 +1172,17 @@ function ProductFormModal({ product, categories, onSave, onClose }: {
     specs: {}, description: '', tags: [], isActive: true, sellers: [], createdAt: new Date().toISOString().split('T')[0],
   });
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setForm({ ...form, image: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={onClose}>
       <div className="bg-white rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
@@ -1196,10 +1207,44 @@ function ProductFormModal({ product, categories, onSave, onClose }: {
               </select>
             </div>
           </div>
+          
+          {/* Image Upload Section */}
           <div>
-            <label className="text-xs text-gray-500 mb-1 block">آدرس تصویر</label>
-            <input type="text" value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm" placeholder="https://..." />
+            <label className="text-xs text-gray-500 mb-1 block">تصویر محصول</label>
+            <div className="flex gap-3 items-start">
+              {/* Preview */}
+              {form.image && (
+                <div className="w-24 h-24 rounded-lg border border-gray-200 overflow-hidden flex-shrink-0">
+                  <img src={form.image} alt="Preview" className="w-full h-full object-cover" />
+                </div>
+              )}
+              {/* Upload Options */}
+              <div className="flex-1 space-y-2">
+                {/* File Upload */}
+                <label className="flex items-center gap-2 px-3 py-2 bg-blue-50 text-blue-600 rounded-lg text-sm cursor-pointer hover:bg-blue-100 transition-colors border border-blue-200">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                  />
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span>انتخاب از کامپیوتر</span>
+                </label>
+                {/* URL Input */}
+                <input
+                  type="text"
+                  value={form.image?.startsWith('data:') ? '' : form.image}
+                  onChange={(e) => setForm({ ...form, image: e.target.value })}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm"
+                  placeholder="یا آدرس URL تصویر را وارد کنید..."
+                />
+              </div>
+            </div>
           </div>
+
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="text-xs text-gray-500 mb-1 block">کمترین قیمت</label>

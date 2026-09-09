@@ -22,6 +22,7 @@ const categoryIcons: Record<string, React.ElementType> = {
   heart: Heart,
   dumbbell: Dumbbell,
   book: Book,
+  'book-open': Book,
   wrench: Wrench,
 };
 
