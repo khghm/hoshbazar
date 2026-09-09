@@ -1,42 +1,46 @@
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Settings, Phone, Mail, MapPin } from 'lucide-react';
 
-export default function Footer() {
+interface FooterProps {
+  onAdminClick: () => void;
+}
+
+export default function Footer({ onAdminClick }: FooterProps) {
   return (
-    <footer className="bg-text-primary text-white mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand */}
+    <footer className="bg-white border-t border-gray-100 mt-auto">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          {/* About */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">HB</span>
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 bg-[#e84a4a] rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">هـ</span>
               </div>
-              <h3 className="text-lg font-bold">هوش‌بازار</h3>
+              <span className="text-lg font-bold text-gray-800">هوش‌بازار</span>
             </div>
-            <p className="text-sm text-gray-400 leading-7">
-              هوش‌بازار بزرگ‌ترین موتور جستجو و مقایسه قیمت در ایران. با ما بهترین قیمت را از هزاران فروشگاه معتبر پیدا کنید.
+            <p className="text-sm text-gray-500 leading-6">
+              هوش‌بازار، موتور جستجو و مقایسه قیمت محصولات از هزاران فروشگاه معتبر. بهترین قیمت را پیدا کنید و با اطمینان خرید کنید.
             </p>
           </div>
 
-          {/* Links */}
+          {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4 text-sm">دسترسی سریع</h4>
-            <ul className="space-y-2.5">
-              {['صفحه اصلی', 'دسته‌بندی‌ها', 'تخفیف‌های ویژه', 'جدیدترین‌ها', 'پرفروش‌ترین‌ها'].map((item) => (
+            <h4 className="text-sm font-bold text-gray-800 mb-3">دسترسی سریع</h4>
+            <ul className="space-y-2">
+              {['درباره ما', 'تماس با ما', 'قوانین و مقررات', 'حریم خصوصی', 'راهنمای خرید'].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">{item}</a>
+                  <a href="#" className="text-sm text-gray-500 hover:text-[#e84a4a] transition-colors">{item}</a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Categories */}
           <div>
-            <h4 className="font-semibold mb-4 text-sm">خدمات</h4>
-            <ul className="space-y-2.5">
-              {['هشدار کاهش قیمت', 'افزودن فروشگاه', 'API توسعه‌دهندگان', 'اپلیکیشن موبایل', 'همکاری در فروش'].map((item) => (
+            <h4 className="text-sm font-bold text-gray-800 mb-3">دسته‌بندی‌ها</h4>
+            <ul className="space-y-2">
+              {['موبایل و تبلت', 'لپ‌تاپ و کامپیوتر', 'لوازم خانگی', 'مد و پوشاک', 'زیبایی و سلامت'].map((item) => (
                 <li key={item}>
-                  <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors">{item}</a>
+                  <a href="#" className="text-sm text-gray-500 hover:text-[#e84a4a] transition-colors">{item}</a>
                 </li>
               ))}
             </ul>
@@ -44,34 +48,36 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold mb-4 text-sm">ارتباط با ما</h4>
+            <h4 className="text-sm font-bold text-gray-800 mb-3">ارتباط با ما</h4>
             <ul className="space-y-3">
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-primary-400" />
-                <span className="text-sm text-gray-400">info@hooshbazar.ir</span>
+              <li className="flex items-center gap-2 text-sm text-gray-500">
+                <Phone className="w-4 h-4 text-gray-400" />
+                ۰۲۱-۱۲۳۴۵۶۷۸
               </li>
-              <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-primary-400" />
-                <span className="text-sm text-gray-400">۰۲۱-۱۲۳۴۵۶۷۸</span>
+              <li className="flex items-center gap-2 text-sm text-gray-500">
+                <Mail className="w-4 h-4 text-gray-400" />
+                info@hooshbazar.ir
               </li>
-              <li className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-primary-400" />
-                <span className="text-sm text-gray-400">تهران، خیابان ولیعصر</span>
+              <li className="flex items-center gap-2 text-sm text-gray-500">
+                <MapPin className="w-4 h-4 text-gray-400" />
+                تهران، خیابان ولیعصر
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-10 pt-6 flex items-center justify-between flex-wrap gap-4">
-          <p className="text-xs text-gray-500">© ۱۴۰۳ هوش‌بازار — تمامی حقوق محفوظ است</p>
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center">
-              <span className="text-[10px] text-gray-400 font-medium">نماد</span>
-            </div>
-            <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center">
-              <span className="text-[10px] text-gray-400 font-medium">eNamad</span>
-            </div>
-          </div>
+        {/* Bottom */}
+        <div className="border-t border-gray-100 pt-6 flex items-center justify-between flex-wrap gap-3">
+          <p className="text-xs text-gray-400">
+            © ۱۴۰۳ هوش‌بازار. تمامی حقوق محفوظ است.
+          </p>
+          <button
+            onClick={onAdminClick}
+            className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#e84a4a] transition-colors"
+          >
+            <Settings className="w-3.5 h-3.5" />
+            پنل مدیریت
+          </button>
         </div>
       </div>
     </footer>

@@ -1,24 +1,3 @@
-export interface Product {
-  id: string;
-  title: string;
-  brand: string;
-  category: string;
-  subcategory: string;
-  image: string;
-  images: string[];
-  minPrice: number;
-  maxPrice: number;
-  avgPrice: number;
-  sellers: Seller[];
-  rating: number;
-  reviewCount: number;
-  specs: Record<string, string>;
-  description: string;
-  tags: string[];
-  createdAt: string;
-  isActive: boolean;
-}
-
 export interface Seller {
   id: string;
   name: string;
@@ -29,6 +8,29 @@ export interface Seller {
   warranty: string;
   inStock: boolean;
   url: string;
+  logo?: string;
+}
+
+export interface Product {
+  id: string;
+  title: string;
+  brand: string;
+  categoryId: string;
+  subcategory: string;
+  image: string;
+  images: string[];
+  minPrice: number;
+  maxPrice: number;
+  avgPrice: number;
+  rating: number;
+  reviewCount: number;
+  sellerCount: number;
+  specs: Record<string, string>;
+  description: string;
+  tags: string[];
+  createdAt: string;
+  isActive: boolean;
+  sellers: Seller[];
 }
 
 export interface Category {
@@ -37,6 +39,7 @@ export interface Category {
   icon: string;
   subcategories: string[];
   productCount: number;
+  color: string;
 }
 
 export interface Order {
@@ -48,16 +51,19 @@ export interface Order {
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
   date: string;
   customerName: string;
+  trackingCode?: string;
 }
 
 export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'user' | 'seller';
+  phone?: string;
+  role: 'user' | 'seller' | 'admin';
   joinDate: string;
   lastActive: string;
   status: 'active' | 'inactive' | 'banned';
+  avatar?: string;
 }
 
 export interface DashboardStats {
@@ -69,7 +75,10 @@ export interface DashboardStats {
   usersGrowth: number;
   ordersGrowth: number;
   revenueGrowth: number;
+  todayOrders: number;
+  todayRevenue: number;
+  pendingOrders: number;
+  activeSellers: number;
 }
 
-export type Page = 'home' | 'search' | 'product' | 'category' | 'admin';
-export type AdminPage = 'dashboard' | 'products' | 'categories' | 'orders' | 'users' | 'sellers' | 'discounts' | 'settings' | 'reports';
+export type AdminTab = 'dashboard' | 'products' | 'categories' | 'orders' | 'users' | 'sellers' | 'discounts' | 'reports' | 'settings';
