@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+:root {
+  --torob-red: #e84a4a;
+  --torob-red-dark: #d63636;
+  --torob-green: #00a049;
+  --torob-green-light: #e6f7ee;
+  --torob-blue: #2563eb;
+  --torob-gray-50: #f9fafb;
+  --torob-gray-100: #f3f4f6;
+  --torob-gray-200: #e5e7eb;
+  --torob-gray-300: #d1d5db;
+  --torob-gray-400: #9ca3af;
+  --torob-gray-500: #6b7280;
+  --torob-gray-600: #4b5563;
+  --torob-gray-700: #374151;
+  --torob-gray-800: #1f2937;
+  --torob-gray-900: #111827;
+}
+
+* {
+  font-family: 'Vazirmatn', system-ui, -apple-system, sans-serif;
+}
+
+html, body {
+  direction: rtl;
+  background: #fff;
+  color: var(--torob-gray-800);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--torob-gray-300); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--torob-gray-400); }
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.animate-fade-in { animation: fadeIn 0.2s ease-out; }
+.animate-slide-up { animation: slideUp 0.3s ease-out; }
+.animate-slide-right { animation: slideInRight 0.3s ease-out; }
+
+/* Number display */
+.fa-num { font-feature-settings: "tnum"; }
+
+/* Torob-style card hover */
+.torob-card {
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.torob-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* Input focus */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+}
+
+/* Hide number input arrows */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] { -moz-appearance: textfield; }
